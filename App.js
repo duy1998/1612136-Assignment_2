@@ -30,14 +30,18 @@ const App = () => {
 
   const onRedo = () => {
     if (arrayRedo.length > 0) {
-      setcolorProp(colors[arrayRedo.pop()]);
+      let tmp = arrayRedo.pop();
+      setcolorProp(colors[tmp]);
+      if (arrayUndo[arrayUndo.length - 1] !== tmp) {
+        arrayUndo.push(tmp);
+      }
     }
     console.log(`Redo: ${arrayRedo}`);
   };
 
   const onChangeColor = (positionColor) => {
+    setcolorProp(colors[positionColor]);
     if (arrayUndo[arrayUndo.length - 1] !== positionColor) {
-      setcolorProp(colors[positionColor]);
       arrayUndo.push(positionColor);
       console.log(`Undo: ${arrayUndo}`);
     }
@@ -97,6 +101,7 @@ const styles = StyleSheet.create({
   },
   container2: {
     flexDirection: 'row',
+    marginStart: 10,
   },
   container3: {
     flex: 1,
@@ -105,7 +110,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    borderWidth: 1,
     marginRight: 10,
     height: 40,
     width: 40,
